@@ -1,4 +1,3 @@
-const { TestScheduler } = require('jest');
 const Potion = require('../lib/Potion.js');
 
 //ensure that new potion object has a name and a value
