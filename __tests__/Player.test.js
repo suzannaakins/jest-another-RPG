@@ -15,3 +15,53 @@ test('creates a player object', () => {
         expect.arrayContaining([expect.any(Object)])
     );
 });
+
+//test that getStats() method returns an object w/ a subset of player's properties
+test("gets player's stats as an object", () => {
+    const player = new Player('Dave');
+
+    expect(player.getStats()).toHaveProperty('potions');
+    expect(player.getStats()).toHaveProperty('health');
+    expect(player.getStats()).toHaveProperty('strength');
+    expect(player.getStats()).toHaveProperty('agility');
+});
+
+//test that getInventory() method returns an ARRAY of Potion objects, or return false if inventory is empty
+test('gets inventory from player or returns false', () => {
+    const player = new Player('Dave');
+    expect(player.getInventory()).toEqual(expect.any(Array));
+    player.inventory = [];
+    expect(player.getInventory()).toEqual(false);
+});
+
+//test to get info about player health
+test("gets player's health value", () => {
+    const player = new Player('Dave');
+    
+    expect(player.getHealth()).toEqual(expect.stringContaining(player.health.toString()));
+})
+
+test('checks if player is alive or not', () => {
+    const player = new Player('Dave');
+
+    expect(player.isAlive()).toBeTruthy();
+
+    player.health = 0;
+    expect(player.isAlive()).toBeFalsy();
+});
+
+//test to see if correct amt of health is being reduced from the player health property
+test("subtracts from player's health", () => {
+    const player = new Player("Dave");
+    const oldHealth = player.health;
+
+    player.reduceHealth(5);
+
+    expect(player.health).toBe(oldHealth - 5);
+
+    //call with ridiculously high number to make sure health does not go negative
+    player.reduceHealth(99999);
+
+    expect(player.health).toBe(0);
+});
+
